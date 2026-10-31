@@ -66,7 +66,7 @@ export function Coaster(props: SVGProps<SVGSVGElement>) {
         <path d={TRACK} stroke="#fff" strokeWidth="1.6" opacity=".55" />
       </g>
 
-      {/* cart: two tiny riders, one with a triangle-shaped head */}
+      {/* cart: Kerlos with his cockatiel riding up front */}
       <g ref={cartRef} style={{ opacity: 0, transition: "opacity .4s" }}>
         <animateMotion
           ref={motionRef}
@@ -80,11 +80,18 @@ export function Coaster(props: SVGProps<SVGSVGElement>) {
           path={TRACK}
         />
         <g transform="translate(0 -7)">
-          <path d="M-13 -24 -13 -38 2 -30Z" fill="#ffd9b0" stroke={INK} strokeWidth="2.5" strokeLinejoin="round" />
-          <path d="M-14 -38c2-4 5-4 6-1 1-3 4-3 5 0" fill="none" stroke="#ff4d5e" strokeWidth="2.5" strokeLinecap="round" />
-          <rect x="6" y="-42" width="9" height="17" rx="2" fill="#ffd9b0" stroke={INK} strokeWidth="2.5" />
-          <rect x="5.5" y="-46" width="10" height="5" rx="2" fill="#4f9d2a" stroke={INK} strokeWidth="2" />
-          <path d="M-26 -4H24l5-19H-20q-6 0-6 6z" fill="#ff7a1a" stroke={INK} strokeWidth="3.5" strokeLinejoin="round" />
+          <circle cx="-9" cy="-31" r="7.5" fill="#c98d64" stroke={INK} strokeWidth="2.4" />
+          <path d="M-17 -31c-1-9 4-12 8-12s10 3 8 11c-3-4-10-5-16 1z" fill="#2a1a14" stroke={INK} strokeWidth="1.6" strokeLinejoin="round" />
+          <path d="M-12 -27q3 3 6 0" stroke={INK} strokeWidth="1.6" fill="none" strokeLinecap="round" />
+          <ellipse cx="13" cy="-29" rx="5.4" ry="7.4" transform="rotate(18 13 -29)" fill="#9ea2aa" stroke={INK} strokeWidth="1.8" />
+          <path d="M11.5 -34c-3 3-4 7-3.5 11 3-2 4.5-6 4.5-10z" fill="#6b6f78" />
+          <path d="M15.6 -41.5c-1-4-3.6-7-7.2-8.6 3 2.6 4.6 5.6 5 9z" fill="#b3b6bc" stroke={INK} strokeWidth="1.3" strokeLinejoin="round" />
+          <circle cx="16.6" cy="-37.6" r="4.9" fill="#9ea2aa" stroke={INK} strokeWidth="1.8" />
+          <circle cx="18.6" cy="-37.6" r="2.4" fill="#e2d38c" />
+          <circle cx="16.8" cy="-35.4" r="1.6" fill="#f2a165" />
+          <circle cx="17.6" cy="-38.8" r="0.95" fill={INK} />
+          <path d="M21.1 -39.2l3.2 1.6-3.1 1.5z" fill="#8e8a93" stroke={INK} strokeWidth="0.9" strokeLinejoin="round" />
+          <path d="M-26 -4H24l5-19H-20q-6 0-6 6z" fill="#2cc3b5" stroke={INK} strokeWidth="3.5" strokeLinejoin="round" />
           <path d="M-20 -13H22" stroke="#fff" strokeWidth="3" strokeLinecap="round" />
           <circle cx="-14" cy="-2" r="5" fill={INK} />
           <circle cx="14" cy="-2" r="5" fill={INK} />

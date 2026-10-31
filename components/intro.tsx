@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { Cockatiel, KidKerlos } from "@/components/characters";
 import { vars } from "@/lib/utils";
 
 const words = ["The", "Fast", "and", "the", "Flutterious"];
@@ -63,10 +64,21 @@ export function Intro() {
           </span>
         </p>
         <p className="enter-rise mt-5 font-display text-xl tracking-widest text-ink [--intro-delay:0s] sm:text-2xl" style={vars({ "--d": "900ms" })}>
-          starring Kerlos Amir
+          starring Kerlos &amp; his cockatiel
         </p>
       </div>
-      <p className="absolute bottom-6 text-sm font-semibold text-ink/70">Click anywhere to skip</p>
+      <KidKerlos
+        pose="wave"
+        className="enter-up absolute bottom-0 left-[3%] h-[24vh] max-h-[290px] w-auto [--intro-delay:0s] sm:left-[7%] sm:h-[34vh]"
+        style={vars({ "--d": "450ms" })}
+      />
+      <Cockatiel
+        pose="chirp"
+        perch="long-branch"
+        className="enter-from-right absolute bottom-[7%] right-[5%] h-[20vh] max-h-[250px] w-auto [--intro-delay:0s] sm:right-[8%] sm:h-[28vh]"
+        style={vars({ "--d": "500ms" })}
+      />
+      <p className="absolute top-6 text-sm font-semibold text-ink/70 sm:bottom-6 sm:top-auto">Click anywhere to skip</p>
     </div>
   );
 }

@@ -449,7 +449,7 @@ export const catchphrases = [
   "104 days of summer vacation",
   "Whatcha doin'?",
   "I know what we're gonna build today!",
-  "Where's Perry?",
-  "Ferb, hand me the wrench",
+  "Where'd the cockatiel go?",
+  "Who's been chewing the wrench?",
   "Aren't you a little young to be a developer?",
 ];

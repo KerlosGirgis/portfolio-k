@@ -2,12 +2,14 @@
 
 A summer-vacation cartoon portfolio inspired by *Phineas and Ferb*, built with Next.js 16, Tailwind CSS 4 and Motion.
 
+It stars two characters drawn as animated SVG components in [`components/characters.tsx`](components/characters.tsx): **Kerlos** (a cartoon version of me) and my cockatiel, a female normal grey. Limbs, wings and the crest are separate groups, posed and animated by the `rig-*` keyframes in `app/globals.css`; on Main Street Kerlos's steps and her wingbeats follow the scroll. Click her on the backyard fence for a surprise.
+
 Each section is a scene from one summer day:
 
 | Section | Scene |
 | --- | --- |
 | Intro | "Today's episode…" title card that irises open |
-| Hero | Backyard with a self-drawing rollercoaster, fence and a platypus easter egg (click him) |
+| Hero | Backyard with a self-drawing rollercoaster, and a cockatiel on the fence (click him) |
 | About | "Whatcha doin'?" with a to-do notebook and count-up stats |
 | Experience | Secret-agent mission dossiers along a pneumatic tube |
 | Apps | Blueprint sheets that "build" into real screenshots, plus a swipeable gallery |

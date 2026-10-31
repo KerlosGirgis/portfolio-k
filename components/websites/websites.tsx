@@ -12,6 +12,7 @@ import { useMediaQuery } from "@/lib/use-media-query";
 import { cn } from "@/lib/utils";
 import { SiteModal } from "./site-modal";
 import { Storefront, StreetLamp } from "./storefront";
+import { StrollingDuo } from "./strolling-duo";
 
 function Skyline({ className }: { className?: string }) {
   // A row of simple rooftops; repeated so it can slide sideways.
@@ -161,6 +162,8 @@ export function Websites() {
             </a>
           </div>
         </motion.div>
+
+        {isDesktop && <StrollingDuo x={x} progress={scrollYProgress} />}
 
         {/* sidewalk + road */}
         <div aria-hidden="true" className={cn("inset-x-0 bottom-0 h-[6.5rem]", isDesktop ? "absolute" : "relative -mt-[6.5rem]")}>

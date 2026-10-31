@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Cockatiel } from "@/components/characters";
 import { SectionHeading } from "@/components/section-heading";
 import { mobileApps } from "@/lib/data";
 import type { MobileApp } from "@/lib/data";
@@ -53,13 +54,14 @@ export function Apps() {
         <SectionHeading
           id="apps-title"
           tone="light"
-          kicker="Ferb, hand me the Flutter SDK!"
+          kicker="Quick, hand me the Flutter SDK!"
           title="Pocket Inventions"
           fill="#fff"
         >
           Six mobile apps — sketched on blueprints, built with Flutter, shipped to real phones. Tap a blueprint to flip
           through its screens.
         </SectionHeading>
+        <Cockatiel pose="perch" perch="pencil" className="absolute right-[3%] top-0 hidden h-40 w-auto -rotate-3 lg:block xl:right-[6%]" />
 
         <div className="mt-16 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
           {mobileApps.map((app, i) => (

@@ -25,9 +25,9 @@ export function Toolbox() {
       <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-5 border-t-[3px] border-ink bg-wood-deep bg-[image:repeating-linear-gradient(90deg,transparent_0_140px,rgba(27,21,52,0.35)_140px_143px)]" />
 
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
-        <SectionHeading id="toolbox-title" kicker="Ferb's not much of a talker…" title="The Toolbox" fill="var(--color-grass)" capBg="#fff">
+        <SectionHeading id="toolbox-title" kicker="My cockatiel supervises every build…" title="The Toolbox" fill="var(--color-grass)" capBg="#fff">
           <span className="rounded-md bg-[#f6e2bf]/90 px-2 py-0.5 [box-decoration-break:clone] [-webkit-box-decoration-break:clone]">
-            …but he&rsquo;d approve of these. The tools I reach for whenever it&rsquo;s time to build something.
+            …and these are the tools she hasn&rsquo;t chewed yet. The ones I reach for whenever it&rsquo;s time to build something.
           </span>
         </SectionHeading>
 

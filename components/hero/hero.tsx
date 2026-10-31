@@ -4,11 +4,12 @@ import Image from "next/image";
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { Cloud, GrassEdge, Hills } from "@/components/art";
+import { KidKerlos } from "@/components/characters";
 import { Icon } from "@/components/icons";
 import { profile } from "@/lib/data";
 import { vars } from "@/lib/utils";
 import { Coaster } from "./coaster";
-import { PerryPeek } from "./perry-peek";
+import { FenceBird } from "./fence-bird";
 import { RoleFlipper } from "./role-flipper";
 
 const clouds = [
@@ -175,18 +176,21 @@ export function Hero() {
         </div>
       </motion.div>
 
-      {/* fence, grass, a curious platypus and a scroll sign */}
+      {/* fence, grass, the cast, and a scroll sign */}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-[clamp(96px,14vh,140px)]">
-        <PerryPeek className="pointer-events-auto bottom-[calc(100%-16px)] left-[70%] w-20 -translate-x-1/2 sm:w-24 lg:left-[58%]" />
+        <FenceBird className="pointer-events-auto bottom-[calc(100%-20px)] left-[70%] w-[4.6rem] -translate-x-1/2 sm:left-[58%] sm:w-[5.6rem]" />
         <div className="fence absolute inset-0" />
         <a
           href="#about"
           className="pointer-events-auto absolute left-[38%] top-[30%] flex -translate-x-1/2 -rotate-3 items-center gap-2 whitespace-nowrap rounded-md border-[3px] border-ink bg-[#f6d39c] px-3 py-1.5 font-display text-sm tracking-wider shadow-toon-sm transition-transform hover:rotate-2 sm:left-1/2 sm:px-4 sm:text-lg"
         >
-          Scroll down, Ferb!
+          Scroll down!
           <Icon name="arrowDown" className="ambient size-5 animate-[bob_1.4s_ease-in-out_infinite]" />
         </a>
         <GrassEdge className="absolute inset-x-0 bottom-0 h-10 w-full sm:h-12" />
+        <div className="absolute bottom-1 right-[3%] hidden items-end sm:flex lg:right-[4%]">
+          <KidKerlos pose="point" className="enter-up h-[clamp(104px,17vh,156px)] w-auto" style={vars({ "--d": "1150ms" })} />
+        </div>
       </div>
     </section>
   );

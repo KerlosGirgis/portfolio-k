@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { animate, motion, useInView } from "motion/react";
 import type { Variants } from "motion/react";
+import { KidKerlos } from "@/components/characters";
 import { Icon } from "@/components/icons";
 import { Reveal } from "@/components/reveal";
 import { SectionHeading } from "@/components/section-heading";
@@ -111,11 +112,14 @@ export function About() {
         <div className="mt-14 grid items-start gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
           <div>
             <Reveal rotate={-3}>
-              <p className="bubble px-6 py-5 text-xl font-semibold leading-snug sm:text-2xl">
-                Oh, just building apps &amp; websites that people actually enjoy using.
-              </p>
+              <div className="flex items-start gap-4 sm:gap-6">
+                <KidKerlos pose="wave" className="w-[5.2rem] shrink-0 sm:w-28" />
+                <p className="bubble bubble--left mt-1 px-5 py-4 text-lg font-semibold leading-snug sm:px-6 sm:py-5 sm:text-2xl">
+                  Oh, just building apps &amp; websites that people actually enjoy using.
+                </p>
+              </div>
             </Reveal>
-            <Reveal delay={0.08} className="mt-12 space-y-5 text-lg leading-relaxed text-ink/85 sm:text-[1.15rem]">
+            <Reveal delay={0.08} className="mt-8 space-y-5 text-lg leading-relaxed text-ink/85 sm:text-[1.15rem]">
               <p>
                 I&rsquo;m <strong className="text-ink">Kerlos Amir Girgis</strong>, a Flutter developer from Cairo with a degree in
                 Computer Science and a soft spot for clean, scalable code. I build production-ready mobile apps with{" "}

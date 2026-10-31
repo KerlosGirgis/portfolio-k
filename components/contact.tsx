@@ -15,7 +15,7 @@ const links: { href: string; label: string; detail: string; icon: IconName; clas
   { href: profile.resume, label: "Resume", detail: "The full blueprint", icon: "download", className: "bg-sun" },
 ];
 
-/** End-of-episode silhouettes: hill, the big tree, and two kids with their pet under it. */
+/** End-of-episode silhouettes: hill, the big tree, and Kerlos with his cockatiel under it. */
 function Sunset() {
   return (
     <svg viewBox="0 0 1440 320" preserveAspectRatio="xMidYMax slice" aria-hidden="true" className="absolute inset-x-0 bottom-0 h-[min(42vw,320px)] w-full">
@@ -29,17 +29,17 @@ function Sunset() {
         <circle cx="1186" cy="138" r="60" />
         <circle cx="1146" cy="176" r="52" />
         <circle cx="1080" cy="186" r="46" />
-        <g transform="translate(900 192) scale(1.7)">
-          {/* kid with a triangle head, looking at the sunset */}
-          <path d="M24 0-12 19l36 13z" />
-          <path d="M18 1l3-8 3 6 4-7 2 8z" />
-          <rect x="6" y="28" width="24" height="28" rx="10" />
-          {/* tall kid with a tuft of hair */}
-          <rect x="42" y="2" width="16" height="30" rx="3" />
-          <path d="M40 4l4-9 4 6 4-8 3 7 4-3v7z" />
-          <rect x="38" y="29" width="26" height="27" rx="10" />
-          {/* their pet platypus */}
-          <path d="M70 56c0-13 10-19 20-19s18 7 18 16l13 2c3 4-1 8-13 6z" />
+        <g transform="translate(930 196) scale(1.7)">
+          {/* Kerlos, watching the sunset */}
+          <circle cx="18" cy="14" r="13" />
+          <path d="M5 10c2-12 22-16 28-4-7-2-14-1-19 4z" />
+          <rect x="4" y="27" width="28" height="30" rx="11" />
+          {/* his cockatiel, on his shoulder */}
+          <ellipse cx="34" cy="20" rx="4.8" ry="7.6" transform="rotate(18 34 20)" />
+          <circle cx="37.5" cy="11.5" r="4.8" />
+          <path d="M36.5 7.5c-1-5-4.5-9.5-9-11.5 3.5 4 5.5 7.5 6 11.5z" />
+          <path d="M41.6 9.6l3.6 2.2-3.4 1.8z" />
+          <path d="M31 25l-4 10 2.4.8 4.6-9.6z" />
         </g>
       </g>
     </svg>

@@ -230,6 +230,23 @@
     border-color: #fff transparent transparent transparent;
   }
 
+  /* Bubble whose tail points left, toward a speaker beside it. */
+  .bubble--left::before {
+    left: -1.4rem;
+    bottom: auto;
+    top: var(--tail-y, 1.3rem);
+    border-width: 0 1.4rem 1.1rem 0;
+    border-color: transparent var(--color-ink) transparent transparent;
+  }
+  .bubble--left::after {
+    left: -0.88rem;
+    bottom: auto;
+    top: calc(var(--tail-y, 1.3rem) + 3px);
+    margin-left: 0;
+    border-width: 0 0.95rem 0.72rem 0;
+    border-color: transparent #fff transparent transparent;
+  }
+
   /* Sticker / pill tag */
   .tag {
     display: inline-flex;
@@ -562,6 +579,194 @@
   50% {
     opacity: 0;
   }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Character rigs (components/characters.tsx)                        */
+/* ------------------------------------------------------------------ */
+@keyframes rig-wave {
+  0%,
+  100% {
+    transform: rotate(-150deg);
+  }
+  50% {
+    transform: rotate(-120deg);
+  }
+}
+
+@keyframes rig-sway {
+  0%,
+  100% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(4deg);
+  }
+}
+
+@keyframes rig-blink {
+  0%,
+  93%,
+  100% {
+    transform: scaleY(1);
+  }
+  96% {
+    transform: scaleY(0.08);
+  }
+}
+
+@keyframes rig-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes rig-crest {
+  0%,
+  100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(4deg);
+  }
+}
+
+@keyframes rig-tilt {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  40% {
+    transform: rotate(-6deg);
+  }
+  70% {
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes rig-headbob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-3px) rotate(-5deg);
+  }
+}
+
+@keyframes rig-chirp {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(18deg);
+  }
+}
+
+@keyframes rig-flap {
+  0%,
+  100% {
+    transform: rotate(-12deg);
+  }
+  50% {
+    transform: rotate(-140deg);
+  }
+}
+
+@keyframes rig-glide {
+  0%,
+  100% {
+    transform: translateY(3px);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes note-rise {
+  0% {
+    opacity: 0;
+    transform: translate(0, 4px);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(10px, -26px);
+  }
+}
+
+@keyframes chirp-pulse {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translateX(-3px);
+  }
+  25%,
+  55% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes from-right {
+  from {
+    transform: translateX(110%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+.enter-from-right {
+  animation: from-right 0.9s var(--ease-boing) both;
+  animation-delay: calc(var(--intro-delay) + var(--d, 0ms));
+}
+
+@keyframes up-in {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+.enter-up {
+  animation: up-in 0.8s var(--ease-boing) both;
+  animation-delay: calc(var(--intro-delay) + var(--d, 0ms));
+}
+
+/* Walking is driven by scroll: --walk (an angle) swings the limbs and flaps the wings. */
+.walker .rig-leg-l {
+  transform: rotate(calc(sin(var(--walk, 0rad)) * 24deg));
+}
+.walker .rig-leg-r {
+  transform: rotate(calc(sin(var(--walk, 0rad)) * -24deg));
+}
+.walker .rig-arm-l {
+  transform: rotate(calc(sin(var(--walk, 0rad)) * -20deg));
+}
+.walker .rig-arm-r {
+  transform: rotate(calc(sin(var(--walk, 0rad)) * 20deg));
+}
+.walker .rig-step {
+  transform: translateY(calc((1 - cos(var(--walk, 0rad) * 2)) * -2.5px));
+}
+.walker .rig-wing {
+  transform: rotate(calc(-76deg + sin(var(--walk, 0rad) * 1.5) * 64deg));
+}
+.walker .rig-wing-far {
+  transform: rotate(calc(-76deg + sin(var(--walk, 0rad) * 1.5 - 0.5rad) * 64deg));
+}
+.walker .rig-glide {
+  transform: translateY(calc(sin(var(--walk, 0rad) * 1.5) * -3px));
 }
 
 /* ------------------------------------------------------------------ */

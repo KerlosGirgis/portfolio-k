@@ -1,4 +1,4 @@
-import { Platypus } from "@/components/art";
+import { Cockatiel } from "@/components/characters";
 import { Icon } from "@/components/icons";
 import { navLinks, profile } from "@/lib/data";
 import { seeded } from "@/lib/utils";
@@ -43,8 +43,8 @@ export function Footer() {
 
       <div className="mx-auto flex max-w-6xl flex-col items-center px-5 text-center sm:px-8">
         <div className="relative">
-          <p className="bubble mb-6 px-5 py-2.5 text-lg font-semibold text-ink [--tail-x:46%]">Oh, there you are, Perry!</p>
-          <Platypus agent className="mx-auto w-28 drop-shadow-[0_6px_0_rgba(0,0,0,0.35)] sm:w-32" />
+          <p className="bubble mb-4 px-5 py-2.5 text-lg font-semibold text-ink [--tail-x:46%]">Shh&hellip; she&rsquo;s asleep.</p>
+          <Cockatiel pose="sleep" perch="branch" marksColor="#fff6c4" className="mx-auto w-32 drop-shadow-[0_6px_0_rgba(0,0,0,0.35)] sm:w-36" />
         </div>
 
         <nav aria-label="Footer" className="mt-10">
