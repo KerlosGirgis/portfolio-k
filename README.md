@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Kerlos Amir — Portfolio
 
-## Getting Started
+A summer-vacation cartoon portfolio inspired by *Phineas and Ferb*, built with Next.js 16, Tailwind CSS 4 and Motion.
 
-First, run the development server:
+Each section is a scene from one summer day:
+
+| Section | Scene |
+| --- | --- |
+| Intro | "Today's episode…" title card that irises open |
+| Hero | Backyard with a self-drawing rollercoaster, fence and a platypus easter egg (click him) |
+| About | "Whatcha doin'?" with a to-do notebook and count-up stats |
+| Experience | Secret-agent mission dossiers along a pneumatic tube |
+| Apps | Blueprint sheets that "build" into real screenshots, plus a swipeable gallery |
+| Websites | Main Street storefronts; hover a shop window to tour the whole site |
+| Skills | Tool tags hanging on a garage pegboard |
+| Contact / Footer | Sunset, then night |
+
+## Running it
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
+npm run build    # production build (the page is fully static)
+npm run lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Editing content
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+All text lives in [`lib/data.ts`](lib/data.ts): profile and links, stats, experience, mobile apps, websites and skills. Components read from there, so most updates need no component changes.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Images are in `public/media`:
 
-## Learn More
+- `apps/<slug>/01.webp, 02.webp, …`: phone screenshots (framed, about 900px wide)
+- `apps/digitalhouse/demo.mp4`: demo video, loaded only when the gallery opens
+- `sites/<slug>/desktop.webp`, `full.webp` (full-page capture, 900px wide), `mobile.webp`
+- `me.webp`: portrait
 
-To learn more about Next.js, take a look at the following resources:
+### Adding the Flower app screenshots
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Save the screenshots as `public/media/apps/flower/01.webp`, `02.webp`, and so on.
+2. In `lib/data.ts`, find the `flower` entry and:
+   - set `screens` to the number of images
+   - set `size` to their pixel size
+   - pick the three `cover` screens
+   - remove `blueprintOnly`
+   - replace the description with the real one
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Adding a website
 
-## Deploy on Vercel
+Add an entry to `websites` in `lib/data.ts` and put `desktop.webp`, `full.webp` and `mobile.webp` in `public/media/sites/<slug>/`. Set `fullHeight` to the height of `full.webp`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deploying
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+On Vercel it works as-is. On any other host, set `NEXT_PUBLIC_SITE_URL` (for example `https://kerlos.dev`) so link previews use absolute image URLs.
+
+---
+
+An unofficial fan tribute. *Phineas and Ferb* belongs to Disney; this site is not affiliated with or endorsed by Disney. Tech logos come from [Devicon](https://devicon.dev) (MIT).

@@ -1,0 +1,193 @@
+"use client";
+
+import Image from "next/image";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "motion/react";
+import { Cloud, GrassEdge, Hills } from "@/components/art";
+import { Icon } from "@/components/icons";
+import { profile } from "@/lib/data";
+import { vars } from "@/lib/utils";
+import { Coaster } from "./coaster";
+import { PerryPeek } from "./perry-peek";
+import { RoleFlipper } from "./role-flipper";
+
+const clouds = [
+  { top: "9%", width: 210, duration: 78, delay: -12 },
+  { top: "22%", width: 130, duration: 96, delay: -60 },
+  { top: "5%", width: 150, duration: 110, delay: -88 },
+  { top: "34%", width: 180, duration: 86, delay: -40 },
+];
+
+const socials = [
+  { href: profile.github, label: "GitHub", icon: "github" },
+  { href: profile.linkedin, label: "LinkedIn", icon: "linkedin" },
+  { href: `mailto:${profile.email}`, label: "Email", icon: "mail" },
+  { href: profile.whatsapp, label: "WhatsApp", icon: "whatsapp" },
+] as const;
+
+export function Hero() {
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const cloudsY = useTransform(scrollYProgress, [0, 1], ["0%", "55%"]);
+  const sceneY = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "22%"]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
+
+  return (
+    <section
+      ref={ref}
+      id="top"
+      aria-label="Introduction"
+      className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-[linear-gradient(180deg,#36b9f1_0%,#6bd0f7_48%,#c4f0ff_100%)]"
+    >
+      {/* sun in the corner */}
+      <div aria-hidden="true" className="pointer-events-none absolute -right-16 -top-16 -z-10 size-64 sm:size-80">
+        <div className="sunburst ambient absolute -inset-1/4 animate-[spin_60s_linear_infinite] [--ray-a:rgba(255,236,150,0.75)]" />
+        <div className="absolute inset-[22%] rounded-full border-[4px] border-ink bg-sun shadow-[inset_-10px_-12px_0_0_var(--color-sun-deep)]" />
+      </div>
+
+      {/* drifting clouds */}
+      <motion.div aria-hidden="true" style={{ y: cloudsY }} className="pointer-events-none absolute inset-0 -z-10">
+        {clouds.map((c) => (
+          <div
+            key={c.top}
+            className="ambient absolute left-0"
+            style={{
+              top: c.top,
+              width: c.width,
+              animation: `drift ${c.duration}s linear ${c.delay}s infinite`,
+            }}
+          >
+            <Cloud className="w-full" />
+          </div>
+        ))}
+      </motion.div>
+
+      {/* backyard scene */}
+      <motion.div aria-hidden="true" style={{ y: sceneY }} className="pointer-events-none absolute inset-0 -z-10">
+        <Hills className="absolute inset-x-0 bottom-[calc(var(--fence-h)-24px)] h-[22vh] w-full [--fence-h:clamp(96px,14vh,140px)]" />
+        <Coaster className="absolute bottom-[calc(clamp(96px,14vh,140px)-30px)] left-1/2 w-[190vw] max-w-none -translate-x-[42%] opacity-95 sm:w-[96vw] lg:left-auto lg:right-[-4vw] lg:w-[64vw] lg:max-w-[1040px] lg:translate-x-0" />
+      </motion.div>
+
+      {/* content */}
+      <motion.div
+        style={{ y: contentY, opacity: contentOpacity }}
+        className="relative z-10 mx-auto grid w-full max-w-7xl flex-1 items-center gap-8 px-5 pb-[calc(clamp(96px,14vh,140px)+11rem)] pt-28 sm:px-8 sm:pb-[calc(clamp(96px,14vh,140px)+16rem)] lg:grid-cols-[1.06fr_0.94fr] lg:gap-4 lg:pb-[calc(clamp(96px,14vh,140px)+3rem)] lg:pt-28"
+      >
+        <div className="order-2 flex flex-col items-center text-center lg:order-1 lg:items-start lg:text-left">
+          <p
+            className="bubble enter-bubble mb-6 inline-block px-5 py-3 text-base font-semibold sm:text-lg"
+            style={vars({ "--d": "0ms" })}
+          >
+            Hey! I know what we&rsquo;re gonna build today!
+          </p>
+
+          <h1 className="flex flex-col items-center lg:items-start">
+            <span className="title-toon enter-rise text-[clamp(1.9rem,4.4vw,3rem)] [--fill:#fff]" style={vars({ "--d": "120ms" })}>
+              Hi, I&rsquo;m
+            </span>
+            <span className="sr-only">Kerlos</span>
+            <span aria-hidden="true" className="title-toon mt-3 text-[clamp(4.4rem,15vw,8.75rem)] [--drop:0.05em] [--stroke:0.13em]">
+              {Array.from("KERLOS").map((letter, i) => (
+                <span key={i} className="enter-pop" style={vars({ "--d": `${220 + i * 75}ms` })}>
+                  {letter}
+                </span>
+              ))}
+            </span>
+          </h1>
+
+          <RoleFlipper roles={profile.roles} className="enter-rise" style={vars({ "--d": "760ms" })} />
+
+          <p
+            className="enter-rise mt-5 max-w-xl text-lg leading-relaxed font-medium text-ink/85 sm:text-xl lg:text-[1.15rem]"
+            style={vars({ "--d": "880ms" })}
+          >
+            {profile.intro}
+          </p>
+
+          <div
+            className="enter-rise mt-7 flex flex-wrap justify-center gap-4 lg:justify-start"
+            style={vars({ "--d": "1000ms" })}
+          >
+            <a href="#apps" className="btn-toon btn-toon--orange text-lg">
+              See my inventions
+              <Icon name="arrowDown" className="size-5" />
+            </a>
+            <a href={profile.resume} target="_blank" rel="noopener noreferrer" className="btn-toon text-lg">
+              Get the blueprint
+              <Icon name="download" className="size-5" />
+            </a>
+          </div>
+
+          <ul className="enter-rise mt-6 flex gap-3" style={vars({ "--d": "1120ms" })}>
+            {socials.map((s) => (
+              <li key={s.label}>
+                <a
+                  href={s.href}
+                  target={s.href.startsWith("mailto") ? undefined : "_blank"}
+                  rel="noopener noreferrer"
+                  aria-label={s.label}
+                  className="btn-toon btn-toon--icon btn-toon--sm bg-white"
+                >
+                  <Icon name={s.icon} className="size-5" />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* portrait badge */}
+        <div className="order-1 flex justify-center lg:order-2">
+          <div className="enter-rise relative aspect-square w-[min(70vw,420px)]" style={vars({ "--d": "260ms" })}>
+            <div className="sunburst ambient absolute -inset-[32%] animate-[spin_50s_linear_infinite] [--ray-a:rgba(255,255,255,0.6)]" />
+            <svg
+              viewBox="0 0 300 300"
+              aria-hidden="true"
+              className="ambient absolute inset-0 size-full animate-[spin_26s_linear_infinite]"
+            >
+              <defs>
+                <path id="ring-path" d="M150 150m-131 0a131 131 0 1 1 262 0a131 131 0 1 1-262 0" />
+              </defs>
+              <circle cx="150" cy="150" r="147" fill="#fff8e7" stroke="#1b1534" strokeWidth="4" />
+              <text className="font-display" fontSize="17" letterSpacing="2" fill="#1b1534">
+                <textPath href="#ring-path" textLength="820" lengthAdjust="spacing">
+                  FLUTTER DEVELOPER ✦ WEB DEVELOPER ✦ APP BUILDER ✦
+                </textPath>
+              </text>
+            </svg>
+            <div className="absolute inset-[13%] overflow-hidden rounded-full border-[5px] border-ink bg-sky-light shadow-[6px_6px_0_0_var(--color-ink)]">
+              <Image
+                src="/media/me.webp"
+                alt="Portrait of Kerlos Amir Girgis"
+                fill
+                preload
+                sizes="(min-width: 1024px) 320px, 52vw"
+                className="object-cover"
+              />
+            </div>
+            <span className="ambient absolute -left-3 top-[10%] flex animate-[bob_4s_ease-in-out_infinite] items-center gap-1.5 rounded-xl border-[3px] border-ink bg-sun px-3 py-1.5 font-display text-sm tracking-wide shadow-toon-sm sm:text-base">
+              <Icon name="pin" className="size-4" /> {profile.location}
+            </span>
+            <span className="ambient absolute -right-4 bottom-[14%] flex animate-[bob_4.6s_ease-in-out_-1.5s_infinite] items-center gap-1.5 rounded-xl border-[3px] border-ink bg-teal px-3 py-1.5 font-display text-sm tracking-wide shadow-toon-sm sm:text-base">
+              <Icon name="download" className="size-4" /> 7K+ downloads
+            </span>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* fence, grass, a curious platypus and a scroll sign */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-[clamp(96px,14vh,140px)]">
+        <PerryPeek className="pointer-events-auto bottom-[calc(100%-16px)] left-[70%] w-20 -translate-x-1/2 sm:w-24 lg:left-[58%]" />
+        <div className="fence absolute inset-0" />
+        <a
+          href="#about"
+          className="pointer-events-auto absolute left-[38%] top-[30%] flex -translate-x-1/2 -rotate-3 items-center gap-2 whitespace-nowrap rounded-md border-[3px] border-ink bg-[#f6d39c] px-3 py-1.5 font-display text-sm tracking-wider shadow-toon-sm transition-transform hover:rotate-2 sm:left-1/2 sm:px-4 sm:text-lg"
+        >
+          Scroll down, Ferb!
+          <Icon name="arrowDown" className="ambient size-5 animate-[bob_1.4s_ease-in-out_infinite]" />
+        </a>
+        <GrassEdge className="absolute inset-x-0 bottom-0 h-10 w-full sm:h-12" />
+      </div>
+    </section>
+  );
+}

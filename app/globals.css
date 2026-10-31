@@ -1,26 +1,642 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ------------------------------------------------------------------ */
+/*  Design tokens — a summer-vacation cartoon palette                 */
+/* ------------------------------------------------------------------ */
+@theme {
+  --color-ink: #1b1534;
+  --color-ink-soft: #4a4366;
+  --color-paper: #fff8e7;
+  --color-paper-deep: #ffefc7;
+  --color-sky: #6bd0f7;
+  --color-sky-light: #c4f0ff;
+  --color-sky-deep: #2a9fdc;
+  --color-sun: #ffd23f;
+  --color-sun-deep: #ffb627;
+  --color-orange: #ff7a1a;
+  --color-orange-deep: #e35d00;
+  --color-grass: #7ccb45;
+  --color-grass-deep: #4f9d2a;
+  --color-teal: #2cc3b5;
+  --color-teal-deep: #0f7f78;
+  --color-lair: #0a2530;
+  --color-lair-2: #0f3646;
+  --color-glow: #7ff7e4;
+  --color-bill: #ffa83a;
+  --color-fedora: #8b5a2b;
+  --color-doof: #7a4bb8;
+  --color-doof-deep: #3b1f66;
+  --color-candace: #ff4d5e;
+  --color-pink: #ff8fc4;
+  --color-blueprint: #1c4f92;
+  --color-blueprint-deep: #123a6d;
+  --color-blueprint-ink: #e9f3ff;
+  --color-wood: #e0a565;
+  --color-wood-deep: #a76a33;
+  --color-manila: #f4d78f;
+
+  --shadow-toon-xs: 2px 2px 0 0 var(--color-ink);
+  --shadow-toon-sm: 3px 3px 0 0 var(--color-ink);
+  --shadow-toon: 5px 5px 0 0 var(--color-ink);
+  --shadow-toon-lg: 8px 8px 0 0 var(--color-ink);
+
+  --radius-toon: 1.25rem;
+
+  --ease-boing: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-swoosh: cubic-bezier(0.7, 0, 0.3, 1);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-luckiest), "Comic Sans MS", system-ui, sans-serif;
+  --font-sans: var(--font-fredoka), ui-rounded, system-ui, sans-serif;
+  --font-type: var(--font-special-elite), "Courier New", monospace;
+  --font-hand: var(--font-caveat), "Comic Sans MS", cursive;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Delay for hero entrance animations: wait for the intro title card,
+   unless the intro is skipped (repeat visit / reduced motion). */
+:root {
+  --intro-delay: 1.45s;
+}
+:root[data-intro="off"] {
+  --intro-delay: 0s;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Base                                                              */
+/* ------------------------------------------------------------------ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Luckiest Guy's lowercase glyphs read oddly at display sizes */
+  .font-display,
+  .title-toon {
+    text-transform: uppercase;
+  }
+
+  ::selection {
+    background: var(--color-sun);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 3px dashed var(--color-orange);
+    outline-offset: 4px;
+    border-radius: 8px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-delay: 0s !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+    .ambient {
+      animation: none !important;
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ------------------------------------------------------------------ */
+/*  Cartoon primitives                                                */
+/* ------------------------------------------------------------------ */
+@layer components {
+  .toon {
+    border: 3px solid var(--color-ink);
+    border-radius: var(--radius-toon);
+    box-shadow: var(--shadow-toon);
+  }
+
+  /* Chunky button with a hard shadow that "presses" in. */
+  .btn-toon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    padding: 0.8rem 1.4rem;
+    border: 3px solid var(--color-ink);
+    border-radius: 999px;
+    background: var(--btn-bg, #fff);
+    color: var(--color-ink);
+    font-weight: 600;
+    line-height: 1.1;
+    box-shadow: 4px 4px 0 0 var(--color-ink);
+    transition:
+      transform 0.2s var(--ease-boing),
+      box-shadow 0.2s ease,
+      background-color 0.2s ease;
+    cursor: pointer;
+    user-select: none;
+  }
+  .btn-toon:hover {
+    transform: translate(-2px, -2px) rotate(-1.5deg);
+    box-shadow: 6px 6px 0 0 var(--color-ink);
+  }
+  .btn-toon:active {
+    transform: translate(3px, 3px);
+    box-shadow: 0 0 0 0 var(--color-ink);
+    transition-duration: 0.06s;
+  }
+  .btn-toon--orange {
+    --btn-bg: var(--color-orange);
+  }
+  .btn-toon--sun {
+    --btn-bg: var(--color-sun);
+  }
+  .btn-toon--teal {
+    --btn-bg: var(--color-teal);
+  }
+  .btn-toon--sm {
+    padding: 0.5rem 0.95rem;
+    font-size: 0.9rem;
+    border-width: 2.5px;
+    box-shadow: 3px 3px 0 0 var(--color-ink);
+  }
+  .btn-toon--icon {
+    padding: 0;
+    width: 2.9rem;
+    height: 2.9rem;
+  }
+
+  /* Big cartoon lettering with an ink outline and a hard drop shadow. */
+  .title-toon {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 0.92;
+    letter-spacing: 0.015em;
+    color: var(--fill, var(--color-sun));
+    -webkit-text-stroke: var(--stroke, 0.16em) var(--color-ink);
+    paint-order: stroke fill;
+    text-shadow: var(--drop, 0.06em) var(--drop, 0.07em) 0 var(--color-ink);
+  }
+
+  /* Comic-book caption box ("Meanwhile…") */
+  .caption {
+    display: inline-block;
+    padding: 0.4rem 0.95rem 0.3rem;
+    background: var(--cap-bg, var(--color-sun));
+    border: 3px solid var(--color-ink);
+    box-shadow: 4px 4px 0 0 var(--color-ink);
+    font-family: var(--font-display);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-ink);
+    rotate: -2deg;
+  }
+
+  /* Speech bubble with a tail. --tail-x positions the tail. */
+  .bubble {
+    position: relative;
+    background: #fff;
+    border: 3px solid var(--color-ink);
+    border-radius: 1.6rem;
+    box-shadow: 4px 4px 0 0 var(--color-ink);
+  }
+  .bubble::before,
+  .bubble::after {
+    content: "";
+    position: absolute;
+    left: var(--tail-x, 2.2rem);
+    width: 0;
+    height: 0;
+    border-style: solid;
+  }
+  .bubble::before {
+    bottom: -1.35rem;
+    border-width: 1.35rem 1.2rem 0 0;
+    border-color: var(--color-ink) transparent transparent transparent;
+  }
+  .bubble::after {
+    bottom: -0.9rem;
+    margin-left: 3px;
+    border-width: 0.95rem 0.8rem 0 0;
+    border-color: #fff transparent transparent transparent;
+  }
+
+  /* Sticker / pill tag */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.25rem 0.7rem;
+    border: 2px solid currentColor;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+  /* Rubber stamp */
+  .stamp {
+    display: inline-block;
+    padding: 0.35rem 0.85rem 0.2rem;
+    border: 5px double currentColor;
+    border-radius: 10px;
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    line-height: 1.1;
+    -webkit-mask-image: radial-gradient(circle at 20% 30%, transparent 0 2px, #000 2.5px),
+      radial-gradient(circle at 70% 60%, transparent 0 1.5px, #000 2px);
+    -webkit-mask-size: 13px 11px, 17px 19px;
+    mask-image: radial-gradient(circle at 20% 30%, transparent 0 2px, #000 2.5px),
+      radial-gradient(circle at 70% 60%, transparent 0 1.5px, #000 2px);
+    mask-size: 13px 11px, 17px 19px;
+    mask-composite: intersect;
+    -webkit-mask-composite: source-in;
+  }
+
+  /* Masking tape label */
+  .tape {
+    display: inline-block;
+    padding: 0.2rem 1rem 0.1rem;
+    background: rgba(255, 244, 196, 0.92);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
+    font-family: var(--font-hand);
+    font-weight: 700;
+    color: var(--color-ink);
+    clip-path: polygon(2% 0, 98% 6%, 100% 50%, 98% 94%, 1% 100%, 0 52%);
+  }
+
+  /* ---------- Backgrounds ---------- */
+  .bg-dots {
+    background-image: radial-gradient(rgba(27, 21, 52, 0.09) 1.6px, transparent 1.8px);
+    background-size: 22px 22px;
+  }
+
+  .bg-blueprint {
+    background-color: var(--color-blueprint);
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.16) 1.5px, transparent 1.5px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.16) 1.5px, transparent 1.5px),
+      linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+    background-size:
+      120px 120px,
+      120px 120px,
+      24px 24px,
+      24px 24px;
+    background-position: -1px -1px;
+  }
+
+  .bg-pegboard {
+    background-color: #e9c690;
+    background-image:
+      radial-gradient(circle, rgba(96, 58, 18, 0.42) 0 2.4px, rgba(255, 255, 255, 0.3) 3px, transparent 3.6px),
+      linear-gradient(115deg, rgba(255, 255, 255, 0.12), rgba(0, 0, 0, 0.04));
+    background-size: 30px 30px, 100% 100%;
+  }
+
+  .bg-lair {
+    background-color: var(--color-lair);
+    background-image:
+      radial-gradient(ellipse at 50% 0%, rgba(127, 247, 228, 0.16), transparent 60%),
+      linear-gradient(rgba(127, 247, 228, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(127, 247, 228, 0.06) 1px, transparent 1px);
+    background-size: 100% 100%, 44px 44px, 44px 44px;
+  }
+
+  .sunburst {
+    background: repeating-conic-gradient(
+      from 0deg,
+      var(--ray-a, rgba(255, 255, 255, 0.55)) 0deg 9deg,
+      var(--ray-b, rgba(255, 255, 255, 0)) 9deg 18deg
+    );
+    border-radius: 999px;
+    -webkit-mask-image: radial-gradient(circle, #000 18%, transparent 70%);
+    mask-image: radial-gradient(circle, #000 18%, transparent 70%);
+  }
+
+  /* Wooden backyard fence, drawn as a repeating plank tile. */
+  .fence {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='160' viewBox='0 0 56 160'%3E%3Cpath d='M5 160V22c0-9 7-17 23-20 16 3 23 11 23 20v138' fill='%23e0a565' stroke='%231b1534' stroke-width='3'/%3E%3Cpath d='M15 40v108M41 30v118' stroke='%23b97a3e' stroke-width='2' stroke-linecap='round' opacity='.55'/%3E%3Ccircle cx='28' cy='58' r='2.6' fill='%231b1534'/%3E%3Ccircle cx='28' cy='118' r='2.6' fill='%231b1534'/%3E%3C/svg%3E"),
+      linear-gradient(to bottom, transparent 32%, #b9773d 32%, #b9773d 42%, transparent 42%, transparent 70%, #b9773d 70%, #b9773d 80%, transparent 80%);
+    background-size: auto 100%, 100% 100%;
+    background-repeat: repeat-x, no-repeat;
+  }
+
+  /* Phineas' striped shirt */
+  .stripes {
+    background: repeating-linear-gradient(
+      90deg,
+      var(--color-orange) 0 22px,
+      #fff 22px 44px
+    );
+  }
+
+  /* Row of triangle "teeth" for section edges; colour comes from --edge. */
+  .edge-zigzag {
+    height: 14px;
+    background: var(--edge);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='14'%3E%3Cpath d='M0 14 14 0l14 14z'/%3E%3C/svg%3E")
+      repeat-x left bottom / 28px 14px;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='14'%3E%3Cpath d='M0 14 14 0l14 14z'/%3E%3C/svg%3E")
+      repeat-x left bottom / 28px 14px;
+  }
+
+  /* Striped shop awning with a scalloped edge; colour comes from --awning. */
+  .awning {
+    background: repeating-linear-gradient(90deg, var(--awning) 0 24px, #fff 24px 48px);
+    -webkit-mask:
+      radial-gradient(12px at 12px calc(100% - 12px), #000 98%, transparent) 0 0 / 24px 100% repeat-x,
+      linear-gradient(#000 0 0) top / 100% calc(100% - 12px) no-repeat;
+    mask:
+      radial-gradient(12px at 12px calc(100% - 12px), #000 98%, transparent) 0 0 / 24px 100% repeat-x,
+      linear-gradient(#000 0 0) top / 100% calc(100% - 12px) no-repeat;
+  }
+
+  /* Shop-window preview: tour the whole page on hover. */
+  .site-shot {
+    transform: translateY(0);
+    transition: transform 1.1s var(--ease-swoosh);
+  }
+  .storefront:hover .site-shot,
+  .storefront:focus-within .site-shot {
+    transform: translateY(var(--shift));
+    transition: transform var(--dur) ease-in-out;
+  }
+
+  /* Hide scrollbars on horizontal scrollers but keep them scrollable */
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Keyframes                                                         */
+/* ------------------------------------------------------------------ */
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.6em) scale(0.35) rotate(-14deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes bubble-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.2) rotate(-8deg);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.06) rotate(1deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(-2deg);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes drift {
+  from {
+    transform: translateX(-30vw);
+  }
+  to {
+    transform: translateX(130vw);
+  }
+}
+
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes swing {
+  0% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(-9deg);
+  }
+  45% {
+    transform: rotate(6deg);
+  }
+  65% {
+    transform: rotate(-3deg);
+  }
+  85% {
+    transform: rotate(1.5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes grow-up {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(0.7);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes blink {
+  0%,
+  92%,
+  100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.1);
+  }
+}
+
+@keyframes scan {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 6px;
+  }
+}
+
+@keyframes flicker {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  45% {
+    opacity: 0.86;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  55% {
+    opacity: 0.92;
+  }
+}
+
+@keyframes cursor-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Intro title card ("Today's episode…") + iris reveal               */
+/* ------------------------------------------------------------------ */
+@property --iris {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@keyframes iris-open {
+  to {
+    --iris: 160vmax;
+  }
+}
+
+@keyframes intro-hide {
+  to {
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+.intro {
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, transparent var(--iris), #000 calc(var(--iris) + 1px));
+  mask-image: radial-gradient(circle at 50% 50%, transparent var(--iris), #000 calc(var(--iris) + 1px));
+  animation:
+    iris-open 0.75s var(--ease-swoosh) 1.35s forwards,
+    intro-hide 0s linear 2.1s forwards;
+}
+.intro[data-skip] {
+  animation:
+    iris-open 0.5s var(--ease-swoosh) forwards,
+    intro-hide 0s linear 0.5s forwards;
+}
+:root[data-intro="off"] .intro {
+  display: none;
+}
+
+/* Hero entrance helpers (CSS-driven so they run before hydration) */
+.enter-pop {
+  display: inline-block;
+  animation: pop-in 0.7s var(--ease-boing) both;
+  animation-delay: calc(var(--intro-delay) + var(--d, 0ms));
+}
+.enter-rise {
+  animation: rise-in 0.8s var(--ease-boing) both;
+  animation-delay: calc(var(--intro-delay) + var(--d, 0ms));
+}
+.enter-bubble {
+  transform-origin: 12% 100%;
+  animation: bubble-in 0.7s var(--ease-boing) both;
+  animation-delay: calc(var(--intro-delay) + var(--d, 0ms));
+}
+.enter-fade {
+  animation: fade-in 1s ease both;
+  animation-delay: calc(var(--intro-delay) + var(--d, 0ms));
+}
+
+/* Rollercoaster track drawing itself in */
+.coaster-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 2.4s var(--ease-swoosh) forwards;
+  animation-delay: calc(var(--intro-delay) + 0.2s);
+}
+.coaster-post {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: grow-up 0.6s var(--ease-boing) both;
+  animation-delay: calc(var(--intro-delay) + 1.2s + var(--d, 0ms));
+}
+.coaster-cart {
+  opacity: 0;
+  animation: fade-in 0.4s ease forwards;
+  animation-delay: calc(var(--intro-delay) + 2.4s);
 }
