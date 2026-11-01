@@ -503,21 +503,6 @@
   }
 }
 
-@keyframes draw {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes grow-up {
-  from {
-    transform: scaleY(0);
-  }
-  to {
-    transform: scaleY(1);
-  }
-}
-
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -825,23 +810,4 @@
 .enter-fade {
   animation: fade-in 1s ease both;
   animation-delay: calc(var(--intro-delay) + var(--d, 0ms));
-}
-
-/* Rollercoaster track drawing itself in */
-.coaster-draw {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  animation: draw 2.4s var(--ease-swoosh) forwards;
-  animation-delay: calc(var(--intro-delay) + 0.2s);
-}
-.coaster-post {
-  transform-box: fill-box;
-  transform-origin: 50% 100%;
-  animation: grow-up 0.6s var(--ease-boing) both;
-  animation-delay: calc(var(--intro-delay) + 1.2s + var(--d, 0ms));
-}
-.coaster-cart {
-  opacity: 0;
-  animation: fade-in 0.4s ease forwards;
-  animation-delay: calc(var(--intro-delay) + 2.4s);
 }

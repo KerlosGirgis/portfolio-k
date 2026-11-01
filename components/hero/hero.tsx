@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import dynamic from "next/dynamic";
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { Cloud, GrassEdge, Hills } from "@/components/art";
@@ -8,9 +8,11 @@ import { KidKerlos } from "@/components/characters";
 import { Icon } from "@/components/icons";
 import { profile } from "@/lib/data";
 import { vars } from "@/lib/utils";
-import { Coaster } from "./coaster";
 import { FenceBird } from "./fence-bird";
 import { RoleFlipper } from "./role-flipper";
+
+// three.js is big, so the 3D model loads in its own chunk after the page is up.
+const Kerlos3D = dynamic(() => import("./kerlos-3d").then((m) => m.Kerlos3D), { ssr: false });
 
 const clouds = [
   { top: "9%", width: 210, duration: 78, delay: -12 },
@@ -67,13 +69,12 @@ export function Hero() {
       {/* backyard scene */}
       <motion.div aria-hidden="true" style={{ y: sceneY }} className="pointer-events-none absolute inset-0 -z-10">
         <Hills className="absolute inset-x-0 bottom-[calc(var(--fence-h)-24px)] h-[22vh] w-full [--fence-h:clamp(96px,14vh,140px)]" />
-        <Coaster className="absolute bottom-[calc(clamp(96px,14vh,140px)-30px)] left-1/2 w-[190vw] max-w-none -translate-x-[42%] opacity-95 sm:w-[96vw] lg:left-auto lg:right-[-4vw] lg:w-[64vw] lg:max-w-[1040px] lg:translate-x-0" />
       </motion.div>
 
       {/* content */}
       <motion.div
         style={{ y: contentY, opacity: contentOpacity }}
-        className="relative z-10 mx-auto grid w-full max-w-7xl flex-1 items-center gap-8 px-5 pb-[calc(clamp(96px,14vh,140px)+11rem)] pt-28 sm:px-8 sm:pb-[calc(clamp(96px,14vh,140px)+16rem)] lg:grid-cols-[1.06fr_0.94fr] lg:gap-4 lg:pb-[calc(clamp(96px,14vh,140px)+3rem)] lg:pt-28"
+        className="relative z-10 mx-auto grid w-full max-w-7xl flex-1 items-center gap-4 px-5 pb-[calc(clamp(96px,14vh,140px)+2.5rem)] pt-24 sm:px-8 lg:grid-cols-[1.06fr_0.94fr] lg:gap-4 lg:pb-[calc(clamp(96px,14vh,140px)+3rem)] lg:pt-28"
       >
         <div className="order-2 flex flex-col items-center text-center lg:order-1 lg:items-start lg:text-left">
           <p
@@ -137,41 +138,21 @@ export function Hero() {
           </ul>
         </div>
 
-        {/* portrait badge */}
+        {/* Kerlos in 3D, with his cockatiel on his shoulder */}
         <div className="order-1 flex justify-center lg:order-2">
-          <div className="enter-rise relative aspect-square w-[min(70vw,420px)]" style={vars({ "--d": "260ms" })}>
-            <div className="sunburst ambient absolute -inset-[32%] animate-[spin_50s_linear_infinite] [--ray-a:rgba(255,255,255,0.6)]" />
-            <svg
-              viewBox="0 0 300 300"
-              aria-hidden="true"
-              className="ambient absolute inset-0 size-full animate-[spin_26s_linear_infinite]"
-            >
-              <defs>
-                <path id="ring-path" d="M150 150m-131 0a131 131 0 1 1 262 0a131 131 0 1 1-262 0" />
-              </defs>
-              <circle cx="150" cy="150" r="147" fill="#fff8e7" stroke="#1b1534" strokeWidth="4" />
-              <text className="font-display" fontSize="17" letterSpacing="2" fill="#1b1534">
-                <textPath href="#ring-path" textLength="820" lengthAdjust="spacing">
-                  FLUTTER DEVELOPER ✦ WEB DEVELOPER ✦ APP BUILDER ✦
-                </textPath>
-              </text>
-            </svg>
-            <div className="absolute inset-[13%] overflow-hidden rounded-full border-[5px] border-ink bg-sky-light shadow-[6px_6px_0_0_var(--color-ink)]">
-              <Image
-                src="/media/me.webp"
-                alt="Portrait of Kerlos Amir Girgis"
-                fill
-                preload
-                sizes="(min-width: 1024px) 320px, 52vw"
-                className="object-cover"
-              />
+          <div className="relative h-[min(58svh,30rem)] w-full max-w-xl lg:h-[clamp(28rem,calc(100svh-16rem),46rem)]">
+            <div aria-hidden="true" className="enter-fade pointer-events-none absolute inset-0" style={vars({ "--d": "200ms" })}>
+              <div className="sunburst ambient absolute left-1/2 top-[40%] aspect-square w-[130%] -translate-x-1/2 -translate-y-1/2 animate-[spin_50s_linear_infinite] [--ray-a:rgba(255,255,255,0.6)]" />
             </div>
-            <span className="ambient absolute -left-3 top-[10%] flex animate-[bob_4s_ease-in-out_infinite] items-center gap-1.5 rounded-xl border-[3px] border-ink bg-sun px-3 py-1.5 font-display text-sm tracking-wide shadow-toon-sm sm:text-base">
-              <Icon name="pin" className="size-4" /> {profile.location}
-            </span>
-            <span className="ambient absolute -right-4 bottom-[14%] flex animate-[bob_4.6s_ease-in-out_-1.5s_infinite] items-center gap-1.5 rounded-xl border-[3px] border-ink bg-teal px-3 py-1.5 font-display text-sm tracking-wide shadow-toon-sm sm:text-base">
-              <Icon name="download" className="size-4" /> 7K+ downloads
-            </span>
+            <Kerlos3D />
+            <div className="enter-rise pointer-events-none absolute inset-0" style={vars({ "--d": "900ms" })}>
+              <span className="ambient absolute left-0 top-[16%] flex animate-[bob_4s_ease-in-out_infinite] items-center gap-1.5 rounded-xl border-[3px] border-ink bg-sun px-3 py-1.5 font-display text-sm tracking-wide shadow-toon-sm sm:text-base">
+                <Icon name="pin" className="size-4" /> {profile.location}
+              </span>
+              <span className="ambient absolute bottom-[2%] right-0 flex animate-[bob_4.6s_ease-in-out_-1.5s_infinite] items-center gap-1.5 rounded-xl border-[3px] border-ink bg-teal px-3 py-1.5 font-display text-sm tracking-wide shadow-toon-sm sm:bottom-[9%] sm:text-base">
+                <Icon name="download" className="size-4" /> 7K+ downloads
+              </span>
+            </div>
           </div>
         </div>
       </motion.div>
